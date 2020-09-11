@@ -59,7 +59,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    args = message.content.split()
+    args = message.content.casefold().split()
     if args[0] in commands:
         if len(args) == 2:
             amount_string = args[1]
