@@ -67,19 +67,19 @@ async def on_message(message):
             amount_string_sanitized = re.sub("[^0-9]", "", amount_string)
             amount = int(amount_string_sanitized)
             if args[0] == "!famichiki":
-                famichiki_count = (amount / famichiki_price).floor()
+                famichiki_count = int(amount / famichiki_price)
                 remainder = amount - (famichiki_count * famichiki_price)
                 response = '{0:,}円 will buy {1:,} Famichiki at {2}円 each. You have {3}円 left.'.format(amount, famichiki_count, famichiki_price, remainder)
                 if remainder >= strongzero_price:
                     response += " Why not buy a Strong Zero too?"
             elif args[0] == "!nanachiki":
-                nanachiki_count = (amount / nanachiki_price).floor()
+                nanachiki_count = int(amount / nanachiki_price)
                 remainder = amount - (nanachiki_count * nanachiki_price)
                 response = '{0:,}円 will buy {1:,} Nanachiki at {2}円 each. You have {3}円 left.'.format(amount, nanachiki_count, nanachiki_price, remainder)
                 if remainder >= strongzero_price:
                     response += " Why not buy a Strong Zero too?"
             elif args[0] == "!strongzero":
-                strongzero_count = (amount / strongzero_price).floor()
+                strongzero_count = int(amount / strongzero_price)
                 remainder = amount - (strongzero_count * strongzero_price)
                 response = '{0:,}円 will buy {1:,} Strong Zeros at {2}円 each. You have {3}円 left'.format(amount, strongzero_count, strongzero_price, remainder)
         else:
