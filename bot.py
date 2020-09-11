@@ -48,6 +48,7 @@ def get_nanachiki_price():
 
 famichiki_price = get_famichiki_price()
 nanachiki_price = get_nanachiki_price()
+strongzero_price = 130
 
 commands = ['!famichiki', '!nanachiki', '!strongzero']
 
@@ -66,14 +67,21 @@ async def on_message(message):
             amount_string_sanitized = re.sub("[^0-9]", "", amount_string)
             amount = int(amount_string_sanitized)
             if args[0] == "!famichiki":
-                famichiki_count = amount / famichiki_price
-                response = '{0:,}円 will buy {1:,.2f} Famichikis at {2}円 each.'.format(amount, famichiki_count, famichiki_price)
+                famichiki_count = (amount / famichiki_price).floor()
+                remainder = amount - (famichiki_count * famichiki_price)
+                response = '{0:,}円 will buy {1:,} Famichiki at {2}円 each. You have {3}円 left.'.format(amount, famichiki_count, famichiki_price, remainder)
+                if remainder >= strongzero_price:
+                    response += " Why not buy a Strong Zero too?"
             elif args[0] == "!nanachiki":
-                nanachiki_count = amount / nanachiki_price
-                response = '{0:,}円 will buy {1:,.2f} Nanachikis at {2}円 each.'.format(amount, nanachiki_count, nanachiki_price)
+                nanachiki_count = (amount / nanachiki_price).floor()
+                remainder = amount - (nanachiki_count * nanachiki_price)
+                response = '{0:,}円 will buy {1:,} Nanachiki at {2}円 each. You have {3}円 left.'.format(amount, nanachiki_count, nanachiki_price, remainder)
+                if remainder >= strongzero_price:
+                    response += " Why not buy a Strong Zero too?"
             elif args[0] == "!strongzero":
-                strongzero_count = amount / 130
-                response = '{0:,}円 will buy {1:,.2f} Strong Zeros at 130円 each.'.format(amount, strongzero_count)
+                strongzero_count = (amount / strongzero_price).floor()
+                remainder = amount - (strongzero_count * strongzero_price)
+                response = '{0:,}円 will buy {1:,} Strong Zeros at {2}円 each. You have {3}円 left'.format(amount, strongzero_count, strongzero_price, remainder)
         else:
             response = "Only one amount of yen, please."
         await message.channel.send(response)
